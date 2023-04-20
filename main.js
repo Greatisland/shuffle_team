@@ -1,5 +1,5 @@
-const gyungjuHard = ['현진', '재형', '석준', '효정', '리안', '새봄', '은영', '유진', '병근']
-const gyungjuSoft = ['석한', '선영', '주희', '진솔', '형기', '인우', '민정']
+const gyungjuHard = ['현진', '재형', '석준', '효정', '리안', '새봄', '은영', '유진', '병근', '진솔']
+const gyungjuSoft = ['석한', '선영', '주희', '형기', '인우', '민정']
 
 const shuffleArray = (array) => {
   for (let i = array.length - 1; i > 0; i--) {
@@ -74,4 +74,3 @@ const randomSadari = (hard, soft) => {
 }
 
  document.querySelector('.button').addEventListener('click',() => randomSadari(gyungjuHard,gyungjuSoft))
-
