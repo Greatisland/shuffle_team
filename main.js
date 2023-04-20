@@ -31,26 +31,35 @@ const randomSadari = (hard, soft) => {
     total.sort((a,b) => a.length - b.length)
     total[0].push(total[2].pop())
   }
+
   total.forEach((team, i, total) => {
-    let random = Math.floor(Math.random() * 2)
     const checkCouple = (team) => team.includes('재형') && team.includes('효정')
+    let lest = total.filter((team, index) => index !== i)
+
     if(checkCouple(team)){
       const other = team.splice(team.findIndex(human => human === '재형'), 1)[0]
-      let lest = total.filter((team, index) => index !== i)
-      lest[random].push(other)
-      team.push(lest[random].shift())
+      lest.sort((a,b) => a.length - b.length)
+      lest[0].push(other)
+      team.push(lest[0].shift())
     }
 
     const checkManage = (team) => requiredMembers.some(member => team.includes(member))
     if(!checkManage(team)){
-      let lest = total.filter((team, index) => index !== i)
       lest.forEach((lestTeam) => {
-        requiredMembers.forEach(member => {
+        requiredMembers.some(member => {
           const manageIndex = lestTeam.findIndex(human => human === member)
           if(manageIndex !== -1){
-            team.push(lestTeam.splice(manageIndex, 1)[0])
+            team.push(lestTeam.splice(manageIndex, 1,)[0])
+            return true
           }
         })
+
+        const firstNonRequiredIndex = team.findIndex(member => !requiredMembers.includes(member))
+        if (firstNonRequiredIndex !== -1) {
+          const nonRequiredMember = team.splice(firstNonRequiredIndex, 1)[0]
+          lestTeam.push(nonRequiredMember)
+        }
+
       })
     }
   })
